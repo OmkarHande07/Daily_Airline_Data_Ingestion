@@ -1,7 +1,7 @@
 # Daily_Airline_Data_Ingestion
 Designed End-to-End pipeline using different AWS services to ingest the data on daily basis in target redshift table.
 
-**Tech Stack:**
+# Tech Stack:
 1. AWS S3 : Used as a storage.
 2. AWS S3 Cloud Trial : Used for sending notifications for events related to S3.
 3. AWS EventBridge Pattern Rule.

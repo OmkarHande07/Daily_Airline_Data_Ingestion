@@ -19,7 +19,7 @@ Designed End-to-End pipeline using different AWS services to ingest the data on 
 3. Create Glue database, then create Crawlers for dimension table and fact table with the source as JDBC connection and provide paths for the dimension and fact table from redshift->run the crawlers->meta deta tables will be created under Database.
 4. In S3 bucket -> inside the folder for daily incoming raw files -> create a new folder as (date=yyyy-mm-dd) and upload the flights.csv file (input file) into that folder.
 5. Now create one more crawler for this s3 bbucket with data source as S3 and folder for daily raw files-> here we need to enable crawl new sub-folder option-> save and run the crawler.
-6. Now using GLUE Visual ETL we are creating glue job: First add data source ->Glue data catalog->select Database and Table of daily row.
+6. Now using Glue Visual ETL we are creating glue job: First add data source ->Glue data catalog->select Database and Table of daily row.
 7. add one more source ->Glue data catalog->now with dimension table.
 8. Select Join->in source select both of the nodes-> it will be inner join -> add condition as (originairportid = airportid)
 9. Now add Change schema ->drop these columns: originairportid,airportid,date -also update the name of fields as per the schema.

@@ -11,7 +11,7 @@ Designed End-to-End pipeline using different AWS services to ingest the data on 
 7. Redshift : Used as a warehouse.
 8. AWS Step Function: Used for Orchestration.
 
-**Steps to design Pipeline:  **
+**Steps to design Pipeline:**
 
 1. Create a S3 bucket and inside it create 2 folders - i] for dimension table and upload the airport.csv (input file) ii] for daily incoming raw file.
 2. Create and start Redshift cluster->using query editor->create schema and tables for dimension table and fact table (commands are provided in input files).
@@ -27,7 +27,7 @@ Designed End-to-End pipeline using different AWS services to ingest the data on 
 11. One more time add change schema -> drop both airportid -> add target-> select database->table will be fact table -> add the role as redshift-role.
 12. In Upper navigation go to Job Details -> in worker node change number to 2 -> Enable Job Bookmark.
   
-Now comes the Orchestration part means orchestrating different AWS services based on SDK's and API calls.
+**Now comes the Orchestration part means orchestrating different AWS services based on SDK's and API calls.**
 
 13. Search for Step Function-> State machines-> creat ->search StartCrawler (we need to drag and drop it) -> on RHS in API parameter update the name feild with crawler name which was created lastly for daily row files.
 14. also add the policies for Glue ->create inline-> type Glue -> select all.
@@ -36,7 +36,8 @@ Now comes the Orchestration part means orchestrating different AWS services base
 17. Now add wait-> update seconds to 10 -> chnage the next state to GetCrawler.
 18. Add JobRunStart after wait and select Wait for Complete -> in choice add default rule -> StartJobRun and in wait->GetCrawler.
 19. Drag and drop SNS publish -> select the SNS topic-> in messages you can  also provide custom message.
-Error Handling:
+
+**Error Handling:**
 
 20. On StartJobRun -> in error handlin -> error-> select task.failed -> then for below option choose-> SNS topic for failed notification.
 21. Again add choice after StartRunJob->add SNS publish on both sides.
@@ -44,4 +45,4 @@ Error Handling:
 23. Now go to S3 bucket -> in properties->scroll down to AWS cloudTrail event ->Configure in CloudTrail ->create->give name -> in encryption key provide some random name->enable cloudwatch log -> next-> select Data Events -> next-> in Data events->S3->create.
 24. Now go to AWS EventBridge Rules-> in event patterns -> add service as S3 -> event type->AWS API Call Via Cloud Trial -> in pattern edit and enter the provided pattern.->in Target->Step Function-> name of state machine and create.
 25. In s3-> inside dail raw folder -> create folder with (date=yyyy-mm-dd) and upload flights.csv file.
-  [After this CloudTrail will be generated and EventBridge Rule will be capture that and based on that it will trigger Step Function]  
+  **[After this CloudTrail will be generated and EventBridge Rule will be capture that and based on that it will trigger Step Function]**
